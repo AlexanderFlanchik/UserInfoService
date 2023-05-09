@@ -3,7 +3,6 @@ package com.avs.userinfoservice.services;
 import com.avs.userinfoservice.dtos.UserDetailsDto;
 import com.avs.userinfoservice.dtos.UserDto;
 import com.avs.userinfoservice.mapper.UserMapper;
-import com.avs.userinfoservice.repositories.SiteRepository;
 import com.avs.userinfoservice.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,6 @@ public class UserInfoService {
     private final UserRepository userRepository;
 
     @Autowired
-    private final SiteRepository siteRepository;
-
-    @Autowired
     private final UserMapper mapper;
 
     public Flux<UserDto> GetUsers() {
@@ -30,10 +26,6 @@ public class UserInfoService {
     }
 
     public Mono<UserDetailsDto> userDetails(String userId) {
-        return userRepository.findById(userId)
-                .flatMap(user ->
-                            siteRepository.countSiteAmount(userId)
-                                    .map(amount -> new UserDetailsDto(user.getName(), amount))
-                        );
+        return userRepository.GetUserDetails(userId).map(ud -> new UserDetailsDto(ud.getName(), ud.getSites()));
     }
 }
