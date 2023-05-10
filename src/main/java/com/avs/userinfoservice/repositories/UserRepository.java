@@ -30,14 +30,21 @@ public interface UserRepository extends ReactiveMongoRepository<User, String> {
             """,
             """
             {
-                $unwind: "$sites"
+                $unwind: {
+                    path: "$sites",
+                    preserveNullAndEmptyArrays: true
+                }
             }
             """,
             """
             {
                 $group: {
                     _id: { user_id: "$_id", user_name: "$Name" },
-                    sites: { $sum: 1 }
+                    sites: {
+                        $sum: {
+                            $cond: [{ $not: ["$sites"] }, 0, 1]
+                        }
+                    }
                 }
             }
             """,
