@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version>
+		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.avs</groupId>
@@ -14,7 +14,7 @@
 	<name>userinfoservice</name>
 	<description>UserInfo Service API</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -61,6 +61,14 @@
 					</excludes>
 				</configuration>
 				<version>${project.parent.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>19</source>
+					<target>19</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
